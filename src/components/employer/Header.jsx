@@ -2,11 +2,17 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { employerLogout } from '../../redux/slices/employerSlice'
+import logo from '../../images/logo.png'
 
 const navigation = [
   { name: 'Home', href: '/employer/home', current: false },
   { name: 'Jobs', href: '/employer/jobs', current: false },
   { name: 'Plan', href: '/employer/plan', current: false },
+  { name: 'Applications', href: '/employer/applications', current: false},
+  { name: 'Messages', href: '/employer/chat', current: false },
+  { name: 'Profile', href: '/employer/profile', current: false}
 ]
 
 function classNames(...classes) {
@@ -16,9 +22,18 @@ function classNames(...classes) {
 export default function Example() {
 
 const navigate = useNavigate()
+const dispatch = useDispatch()
 
 const handleNavigate = (href)=>{
   navigate(href)
+}
+
+const logout = ()=>{
+  dispatch(employerLogout())
+}
+
+const employerProfile = ()=>{
+  navigate('/employer/profile')
 }
 
   return (
@@ -43,7 +58,7 @@ const handleNavigate = (href)=>{
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     className="h-8 w-auto"
-                    src="https://www.kindpng.com/picc/m/263-2637108_career-icon-png-clipart-png-download-icon-job.png"
+                    src={logo}
                     alt="Your Company"
                   />
                   <h4 className='text-white font-extrabold 	text-2xl	'>MYJOB</h4>
@@ -102,7 +117,7 @@ const handleNavigate = (href)=>{
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={employerProfile}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Your Profile
@@ -112,17 +127,7 @@ const handleNavigate = (href)=>{
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
+                            onClick={logout}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out

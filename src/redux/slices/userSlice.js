@@ -4,7 +4,8 @@ const initialState = {
     role:null,
     token:null,
     name:null,
-    id:null
+    id:null,
+    searchValue:null
 }
 
 const userAuthSlice = createSlice({
@@ -16,14 +17,13 @@ const userAuthSlice = createSlice({
             state.id = action.payload.id
             state.token = action.payload.token
             state.name = action.payload.name
-            
         },
         userLogout : (state)=>{
             state.role = null
             state.id = null
             state.token = null
             state.name = null
-            console.log(state.token);
+
         }
     }
 })

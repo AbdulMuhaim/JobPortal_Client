@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
-import { fetchProfileData, profileData, removeProfileData } from "../../../api/UserApi";
+import {
+  fetchProfileData,
+  profileData,
+  removeProfileData,
+} from "../../../api/UserApi";
 import axios from "axios";
 import editIcon from "../../../images/Ellipse.png";
 import removeIcon from "../../../images/remove2.png";
 import deleteIcon from "../../../images/remove1.png";
+import toast from "react-hot-toast";
 
 function ProfilePage() {
   const [fetchedUserData, setFetchedUserData] = useState([]);
@@ -12,11 +17,10 @@ function ProfilePage() {
   const [fetchedExperiences, setFetchedExperiences] = useState([]);
   const [fetchedEducation, setFetchedEducation] = useState([]);
 
-  const [deleteEducation,setDeleteEducation] = useState(false)
-  const [deleteExperience,setDeleteExperience] = useState(false)
-  const [deleteLanguage,setDeleteLanguage] = useState(false)
-  const [deleteSkill,setDeleteSkill] = useState(false)
-
+  const [deleteEducation, setDeleteEducation] = useState(false);
+  const [deleteExperience, setDeleteExperience] = useState(false);
+  const [deleteLanguage, setDeleteLanguage] = useState(false);
+  const [deleteSkill, setDeleteSkill] = useState(false);
 
   useEffect(() => {
     fetchProfileData()
@@ -51,21 +55,21 @@ function ProfilePage() {
     state: "",
     country: "",
     maritalStatus: "",
+    cv:null
   });
-  const [profilePicValue,setProfilePicValue] = useState({
-    image:null,
-    name:"",
-    profession:"",
-    about:"",
-  })
-
+  const [profilePicValue, setProfilePicValue] = useState({
+    image: null,
+    name: "",
+    profession: "",
+    about: "",
+  });
   const [isOpen, setIsOpen] = useState(false);
   const [language, setLanguage] = useState(false);
   const [skill, setSkill] = useState(false);
   const [experience, setExperience] = useState(false);
   const [education, setEducation] = useState(false);
   const [basicInfo, setBasicInfo] = useState(false);
-  const [profilePic,setProfilePic] = useState(false)
+  const [profilePic, setProfilePic] = useState(false);
 
   const languageModal = () => {
     setIsOpen(true);
@@ -99,51 +103,12 @@ function ProfilePage() {
 
   const profilePicModal = () => {
     setIsOpen(true);
-    setProfilePic(true)
-    setProfilePicValue("")
-  }
-
-  const closeModal = () => {
-    setIsOpen(false);
-    setLanguage(false);
-    setSkill(false);
-    setBasicInfo(false);
-    setExperience(false);
-    setEducation(false);
+    setProfilePic(true);
+    setProfilePicValue("");
   };
 
-  const submitModal = async() => {
-    if(language){
-      setFetchedLanguages([...fetchedLanguages,languageValue])
-      profileData({ languageValue })
-    }
-    if(skill){
-      setFetchedSkills([...fetchedSkills,skillValue])
-      profileData({ skillValue })
-    }
-    if(education){
-      setFetchedEducation([...fetchedEducation,educationValue])
-      profileData({ educationValue })
-    }
-    if (basicInfo) {
-      const updatedUserData = {
-        ...fetchedUserData,
-        age: basicInfoValue.age || fetchedUserData.age,
-        totalExperience: basicInfoValue.totalExperience || fetchedUserData.totalExperience,
-        maritalStatus: basicInfoValue.maritalStatus || fetchedUserData.maritalStatus,
-        state: basicInfoValue.state || fetchedUserData.state,
-        country: basicInfoValue.country || fetchedUserData.country,
-      };
-      setFetchedUserData(updatedUserData);
-      profileData({updatedUserData})
-    }
-    if(experience){
-      companyImage(experienceValue)
-    }
-    if(profilePic){
-      userImage(profilePicValue)
-    }
 
+  const closeModal = () => {
     setIsOpen(false);
     setLanguage(false);
     setSkill(false);
@@ -153,25 +118,84 @@ function ProfilePage() {
     setProfilePic(false)
   };
 
+  const submitModal = async () => {
+    if (language) {
+      setFetchedLanguages([...fetchedLanguages, languageValue]);
+      profileData({ languageValue });
+    }
+    if (skill) {
+      setFetchedSkills([...fetchedSkills, skillValue]);
+      profileData({ skillValue });
+    }
+    if (education) {
+      setFetchedEducation([...fetchedEducation, educationValue]);
+      profileData({ educationValue });
+    }
+    if (basicInfo) {
+      let cvUrl;
+
+      if(basicInfoValue.cv){
+      const cv = basicInfoValue.cv;
+      const cloudName = "df625ktpb";
+      const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+      const formData = new FormData();
+      formData.append("file", cv);
+      formData.append("upload_preset", "JobPortal");
+      const response = await axios.post(url, formData);
+      cvUrl = response.data.secure_url;
+      }
+      const updatedUserData = {
+        ...fetchedUserData,
+        age: basicInfoValue.age || fetchedUserData.age,
+        totalExperience:
+          basicInfoValue.totalExperience || fetchedUserData.totalExperience,
+        maritalStatus:
+          basicInfoValue.maritalStatus || fetchedUserData.maritalStatus,
+        state: basicInfoValue.state || fetchedUserData.state,
+        country: basicInfoValue.country || fetchedUserData.country,
+        cv:cvUrl || fetchedUserData.cv
+      };
+      setFetchedUserData(updatedUserData);
+      profileData({ updatedUserData });
+    }
+    if (experience) {
+      companyImage(experienceValue);
+    }
+    if (profilePic) {
+      userImage(profilePicValue);
+    }
+  
+    setIsOpen(false);
+    setLanguage(false);
+    setSkill(false);
+    setBasicInfo(false);
+    setExperience(false);
+    setEducation(false);
+    setProfilePic(false);
+  };
+
   const companyImage = async (experienceValue) => {
     if (experienceValue.image) {
       const image = experienceValue.image;
       const cloudName = "df625ktpb";
       const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-
       const formData = new FormData();
       formData.append("file", image);
       formData.append("upload_preset", "JobPortal");
+      console.log(formData,'aaa');
       const response = await axios.post(url, formData);
       const imageUrl = response.data.secure_url;
-      const img = experienceValue.image = imageUrl
-      setFetchedExperiences([...fetchedExperiences,experienceValue])
+      experienceValue.image = imageUrl;
+      setFetchedExperiences([...fetchedExperiences, experienceValue]);
       profileData({ experienceValue, imageUrl });
     } else {
-      setFetchedExperiences([...fetchedExperiences,experienceValue])
+      setFetchedExperiences([...fetchedExperiences, experienceValue]);
       profileData({ experienceValue });
     }
   };
+
+
 
   const userImage = async (profilePicValue) => {
     if (profilePicValue.image) {
@@ -187,53 +211,54 @@ function ProfilePage() {
 
       const updateProfilePic = {
         ...fetchedUserData,
-        name:profilePicValue.name || fetchedUserData.name,
-        profession:profilePicValue.profession || fetchedUserData.profession,
-        about:profilePicValue.about || fetchedUserData.about,
-        image:imageUrl || fetchedUserData.image
-      }
+        name: profilePicValue.name || fetchedUserData.name,
+        profession: profilePicValue.profession || fetchedUserData.profession,
+        about: profilePicValue.about || fetchedUserData.about,
+        image: imageUrl || fetchedUserData.image,
+      };
 
-      setFetchedUserData(updateProfilePic)
-      console.log(fetchedUserData);
+      setFetchedUserData(updateProfilePic);
       profileData({ profilePicValue, imageUrl });
     } else {
       const updateProfilePic = {
         ...fetchedUserData,
-        name:profilePicValue.name || fetchedUserData.name,
-        profession:profilePicValue.profession || fetchedUserData.profession,
-        about:profilePicValue.about || fetchedUserData.about,
-      }
-      setFetchedUserData(updateProfilePic)
-      profileData({profilePicValue});
+        name: profilePicValue.name || fetchedUserData.name,
+        profession: profilePicValue.profession || fetchedUserData.profession,
+        about: profilePicValue.about || fetchedUserData.about,
+      };
+      setFetchedUserData(updateProfilePic);
+      profileData({ profilePicValue });
     }
   };
 
-
-  const removeData = ({data, role}) => {
-  if (role === 'language') {
-    const updatedState = fetchedLanguages.filter((language) => language !== data);
-    setFetchedLanguages(updatedState);
-    removeProfileData(data,role)
-  }
-  if (role === 'skill') {
-    const updatedState = fetchedSkills.filter((skill) => skill !== data);
-    setFetchedSkills(updatedState);
-    removeProfileData(data,role)
-  }
-  if (role === 'experience') {
-    const updatedState = fetchedExperiences.filter((experience) => experience !== data);
-    setFetchedExperiences(updatedState);
-    removeProfileData(data,role)
-  }
-  if (role === 'education') {
-    const updatedState = fetchedEducation.filter((education) => education !== data);
-    setFetchedEducation(updatedState);
-    removeProfileData(data,role)
-  }
-};
-
-  
-
+  const removeData = ({ data, role }) => {
+    if (role === "language") {
+      const updatedState = fetchedLanguages.filter(
+        (language) => language !== data
+      );
+      setFetchedLanguages(updatedState);
+      removeProfileData(data, role);
+    }
+    if (role === "skill") {
+      const updatedState = fetchedSkills.filter((skill) => skill !== data);
+      setFetchedSkills(updatedState);
+      removeProfileData(data, role);
+    }
+    if (role === "experience") {
+      const updatedState = fetchedExperiences.filter(
+        (experience) => experience !== data
+      );
+      setFetchedExperiences(updatedState);
+      removeProfileData(data, role);
+    }
+    if (role === "education") {
+      const updatedState = fetchedEducation.filter(
+        (education) => education !== data
+      );
+      setFetchedEducation(updatedState);
+      removeProfileData(data, role);
+    }
+  };
 
   return (
     <>
@@ -361,6 +386,20 @@ function ProfilePage() {
                         })
                       }
                     />
+                    <br />
+                    <br />
+        <span ><p className="opacity-90 text-base font-normal text-white">Drop your CV here</p><input
+                      type="file"
+                      placeholder="cv"
+                      className="w-full"
+                      onChange={(e) =>
+                        setBasicInfoValue({
+                          ...basicInfoValue,
+                          cv: e.target.files[0],
+                        })
+                      }
+                    /></span>
+
                   </form>
                 )}
 
@@ -453,7 +492,8 @@ function ProfilePage() {
                   </form>
                 )}
 
-              {profilePic && (
+
+                {profilePic && (
                   <form className="space-y-6">
                     <input
                       type="text"
@@ -528,12 +568,11 @@ function ProfilePage() {
       )}
       {/* modal closed */}
 
-      <div className="container mx-auto p-5">
-        <div className="grid grid-cols-1  md:grid-cols-5 gap-2 ">
+      <div className="container mx-auto p-5 h-auto">
+        <div className="md:grid grid-cols-1  md:grid-cols-5 gap-2 ">
           <div className="col-span-2 p-5">
-            <div className="bg-white mx-auto h-full rounded-xl shadow-lg inset-0 py-5 px-16">
+            <div className="bg-white mx-auto h-full rounded-xl shadow-lg inset-0 py-5 px-10 md:px-16">
               <div className="w-full flex justify-end"></div>
-
 
               <div className="flex flex-col items-center  py-3 ">
                 <img
@@ -542,42 +581,53 @@ function ProfilePage() {
                   alt=""
                 />
                 <div onClick={profilePicModal} className="flex cursor-pointer">
-                  <img  className="w-6 h-6 " src={editIcon} alt="" />
+                  <img className="w-6 h-6 " src={editIcon} alt="" />
                   <p>edit</p>
                 </div>
 
                 <h1 className="text-lg font-bold">{fetchedUserData.name}</h1>
-                <h1 className="text-sm opacity-75">{fetchedUserData.profession}</h1>
-                <p className="text-xs text-center ">
-                {fetchedUserData.about}
-                </p>
+                <h1 className="text-sm opacity-80 font-semibold">
+                  {fetchedUserData.profession}
+                </h1>
+                <p className="text-xs text-center ">{fetchedUserData.about}</p>
               </div>
 
-
               <div className="my-4 flex justify-between">
-                <h1 className="text-lg font-bold">Languages</h1>
+                <h1 className="md:text-lg text-sm mx-2 font-bold">Languages</h1>
                 <div className="flex justify-center items-center">
-                <button
-                  onClick={languageModal}
-                  className="btn bg-blue-700  rounded-lg px-3 text-white text-xs py-1 "
-                >
-                  Add Language +
-                </button>
-                <img onClick={()=>setDeleteLanguage(!deleteLanguage)} className="w-5 h-5 cursor-pointer" src={editIcon} alt="" />
+                  <button
+                    onClick={languageModal}
+                    className="btn bg-blue-700  rounded-lg px-1 md:px-3 text-white text-xs py-1 "
+                  >
+                    Add Language +
+                  </button>
+                  <img
+                    onClick={() => setDeleteLanguage(!deleteLanguage)}
+                    className="w-5 h-5 cursor-pointer"
+                    src={editIcon}
+                    alt=""
+                  />
                 </div>
               </div>
               <div className="flex">
-                {fetchedLanguages.map((data,index) => (
+                {fetchedLanguages.map((data, index) => (
                   <div key={index} className="flex">
-                    <button
-                      className="btn bg-green-500 mx-2 my-2 rounded-lg px-3 text-white text-xs py-1 "
-                    >
-                      {deleteLanguage && <span>
-                        <div className="flex items-end justify-end">
-                          <img onClick={()=>removeData({data,role:"language"})} className="w-3 h-3" src={removeIcon} alt="" />
-                        </div>
-                      </span> }
-                      
+                    <button className="btn bg-green-500 mx-2 my-2 rounded-lg px-3 text-white text-xs py-1 ">
+                      {deleteLanguage && (
+                        <span>
+                          <div className="flex items-end justify-end">
+                            <img
+                              onClick={() =>
+                                removeData({ data, role: "language" })
+                              }
+                              className="w-3 h-3"
+                              src={removeIcon}
+                              alt=""
+                            />
+                          </div>
+                        </span>
+                      )}
+
                       {data}
                     </button>
                   </div>
@@ -587,25 +637,39 @@ function ProfilePage() {
               <div className="my-4 flex justify-between">
                 <h1 className="text-lg font-bold">Skills</h1>
                 <div className="flex justify-center items-center">
-                <button
-                  onClick={skillModal}
-                  className="btn bg-blue-700  rounded-lg px-3 text-white text-xs py-1 "
-                >
-                  Add a Skill +
-                </button>
-                <img onClick={()=>setDeleteSkill(!deleteSkill)} className="w-5 h-5 cursor-pointer" src={editIcon} alt="" />
+                  <button
+                    onClick={skillModal}
+                    className="btn bg-blue-700  rounded-lg px-3 text-white text-xs py-1 "
+                  >
+                    Add a Skill +
+                  </button>
+                  <img
+                    onClick={() => setDeleteSkill(!deleteSkill)}
+                    className="w-5 h-5 cursor-pointer"
+                    src={editIcon}
+                    alt=""
+                  />
                 </div>
               </div>
               <div className="flex">
-                {fetchedSkills.map((data,index) => (
+                {fetchedSkills.map((data, index) => (
                   <div key={index} className="flex">
                     <button className="btn bg-yellow-400 mx-2 my-2 rounded-lg px-3 text-white text-xs py-1 ">
-                  {deleteSkill && <span>
-                        <div className="flex items-end justify-end ">
-                          <img onClick={()=>removeData({data,role:"skill"})} className="w-3 h-3" src={removeIcon} alt="" />
-                        </div>
-                      </span> }    
-                        {data}
+                      {deleteSkill && (
+                        <span>
+                          <div className="flex items-end justify-end ">
+                            <img
+                              onClick={() =>
+                                removeData({ data, role: "skill" })
+                              }
+                              className="w-3 h-3"
+                              src={removeIcon}
+                              alt=""
+                            />
+                          </div>
+                        </span>
+                      )}
+                      {data}
                     </button>
                   </div>
                 ))}
@@ -625,10 +689,10 @@ function ProfilePage() {
               </div>
 
               <div>
-                <div className="w-full h-full px-8  flex justify-between p-2">
+                <div className="w-full h-full px-8  md:flex justify-between p-2">
                   <div className="h-1/3">
                     <p className="font-semibold opacity-75">Email</p>
-                    <p className="font-bold">{fetchedUserData.email}</p>
+                    <p className="font-bold ">{fetchedUserData.email}</p>
                   </div>
                   <div className="h-1/3">
                     <p className="font-semibold opacity-75">Phone</p>
@@ -640,12 +704,14 @@ function ProfilePage() {
                     <p className="font-bold">{fetchedUserData.age}</p>
                   </div>
                 </div>
-                <div className="w-full h-full px-8  flex justify-between p-2">
+                <div className="w-full h-full px-8  md:flex justify-between p-2">
                   <div className="h-1/3">
                     <p className="font-semibold opacity-75">
                       Years of expeirnce
                     </p>
-                    <p className="font-bold">{fetchedUserData.totalExperience}</p>
+                    <p className="font-bold">
+                      {fetchedUserData.totalExperience}
+                    </p>
                   </div>
                   <div className="h-1/3">
                     <p className="font-semibold opacity-75">Location</p>
@@ -661,9 +727,6 @@ function ProfilePage() {
               </div>
 
               <div className="flex p-3">
-                <button className="btn bg-green-600 mx-2 my-2 rounded-lg px-5 text-white text-xs p-2 ">
-                  Add Resume
-                </button>
                 <button className="btn bg-green-600 mx-2 my-2 rounded-lg px-5 text-white text-xs p-2 ">
                   Download Resume
                 </button>
@@ -681,21 +744,30 @@ function ProfilePage() {
                     Add Experience+
                   </button>
                   <span>
-                    <img onClick={()=>setDeleteExperience(!deleteExperience)} className="w-5 h-5 cursor-pointer" src={editIcon} alt="" />
+                    <img
+                      onClick={() => setDeleteExperience(!deleteExperience)}
+                      className="w-5 h-5 cursor-pointer"
+                      src={editIcon}
+                      alt=""
+                    />
                   </span>
                 </div>
               </div>
               <div>
                 <div className="w-full h-full px-8 flex justify-between p-2 ">
-                  {fetchedExperiences.map((data,index) => (
+                  {fetchedExperiences.map((data, index) => (
                     <div key={index} className="h-1/3">
                       <div className="flex items-end justify-end">
-                       {deleteExperience && <img
-                          onClick={()=>removeData({data,role:"experience"})}
-                          className="w-5 h-5 cursor-pointer"
-                          src={deleteIcon}
-                          alt=""
-                        />} 
+                        {deleteExperience && (
+                          <img
+                            onClick={() =>
+                              removeData({ data, role: "experience" })
+                            }
+                            className="w-5 h-5 cursor-pointer"
+                            src={deleteIcon}
+                            alt=""
+                          />
+                        )}
                       </div>
                       <img
                         className="h-10 w-10 object-cover rounded-full"
@@ -714,9 +786,9 @@ function ProfilePage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1  md:grid-cols-5 gap-2 ">
-          <div className="col-span-2 p-5">
-            <div className=" mx-auto h-full rounded-xl  inset-0 py-5 px-16">
+        <div className="md:grid md:grid-cols-5 h-auto gap-2 ">
+          <div className="md:col-span-2 p-5">
+            <div className=" mx-auto rounded-xl  inset-0 py-5 px-16">
               <div className="flex flex-col items-center py-3 ">
                 <button className="btn bg-sky-500 mx-2 my-2 rounded-lg px-5 text-white text-xs p-2 ">
                   Favourite Jobs
@@ -729,8 +801,8 @@ function ProfilePage() {
             </div>
           </div>
 
-          <div className="col-span-3 p-8">
-            <div className="w-full h-auto bg-white rounded-lg">
+          <div className="md:col-span-3 p-8">
+            <div className="w-full  bg-white rounded-lg">
               <div className="flex justify-between px-5 pt-3">
                 <h2 className="text-lg font-extrabold ">Education</h2>
                 <div className="flex justify-center items-center">
@@ -741,40 +813,49 @@ function ProfilePage() {
                     Add Education+
                   </button>
                   <span>
-                    <img onClick={()=>setDeleteEducation(!deleteEducation)} className="w-5 h-5 cursor-pointer" src={editIcon} alt="" />
+                    <img
+                      onClick={() => setDeleteEducation(!deleteEducation)}
+                      className="w-5 h-5 cursor-pointer"
+                      src={editIcon}
+                      alt=""
+                    />
                   </span>
                 </div>
               </div>
               <div>
-                <div className="w-full h-full px-8  flex justify-between p-2">
-                  <div className="h-1/3">
+                <div className="w-full  px-8  md:flex justify-between p-2">
+                  <div className="">
                     <p className="font-semibold opacity-75">Institution</p>
-                    {fetchedEducation.map((data,index) => (
+                    {fetchedEducation.map((data, index) => (
                       <div key={index} className="flex">
-                        {deleteEducation && <img
-                        onClick={()=>removeData({data,role:"education"})}
-                          className="w-5 h-5 cursor-pointer"
-                          src={deleteIcon}
-                          alt=""
-                        />} 
+                        {deleteEducation && (
+                          <img
+                            onClick={() =>
+                              removeData({ data, role: "education" })
+                            }
+                            className="w-5 h-5 cursor-pointer"
+                            src={deleteIcon}
+                            alt=""
+                          />
+                        )}
 
                         <p className="font-bold">{data.institution}</p>
                       </div>
                     ))}
                   </div>
 
-                  <div className="h-1/3">
+                  <div className="">
                     <p className="font-semibold opacity-75">Field of study</p>
-                    {fetchedEducation.map((data,index) => (
+                    {fetchedEducation.map((data, index) => (
                       <p key={index} className="font-bold">
                         {data.field}
                       </p>
                     ))}
                   </div>
 
-                  <div className="h-1/3">
+                  <div className="">
                     <p className="font-semibold opacity-75">Year</p>
-                    {fetchedEducation.map((data,index) => (
+                    {fetchedEducation.map((data, index) => (
                       <p key={index} className="font-bold">
                         {data.year}
                       </p>
@@ -784,6 +865,7 @@ function ProfilePage() {
               </div>
             </div>
           </div>
+          <div className="h-72 md:h-0 text-black"></div>
         </div>
       </div>
     </>

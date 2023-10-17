@@ -1,16 +1,18 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon,XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon,BellIcon,XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from "react-router"
 import { useDispatch } from 'react-redux'
 import { userLogout } from '../../../redux/slices/userSlice'
+import logo from '../../../images/logo.png'
+
 
 
 const navigation = [
   { name: 'Home', href: '/', current: true },
-  { name: 'Companies', href: '/companies', current: false },
+  { name: 'Jobs', href: '/jobs', current: false},
+  { name: 'Messages', href: '/chat', current: false},
   { name: 'Team', href: '/team', current: false },
-  { name: 'Notifications', href: '/notifications', current: false },
   { name: 'Contact', href: '/contact', current: false },
 ]
 
@@ -59,7 +61,7 @@ export default function Example() {
                 ">
                   <img
                     className="h-8 w-auto"
-                    src="https://www.kindpng.com/picc/m/263-2637108_career-icon-png-clipart-png-download-icon-job.png"
+                    src={logo}
                     alt="Your Company"
                   />
                   <h4 className='text-white font-extrabold 	text-2xl	'>MYJOB</h4>
@@ -85,15 +87,15 @@ export default function Example() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-                {/* <button
-                onClick={logout}
+                <button
+                onClick={()=>navigate('/notifications')}
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button> */}
+                </button>
 
 
                 {/* Profile dropdown */}

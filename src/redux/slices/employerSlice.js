@@ -7,7 +7,7 @@ const initialState = {
     id:null
 }
 
-const adminAuthSlice = createSlice({
+const employerAuthSlice = createSlice({
     name:'employerAuth',
     initialState,
     reducers:{
@@ -27,4 +27,4 @@ const adminAuthSlice = createSlice({
 })
 
 export const {employerLogin,employerLogout} = employerAuthSlice.actions
-export default adminAuthSlice.reducer
+export default employerAuthSlice.reducer

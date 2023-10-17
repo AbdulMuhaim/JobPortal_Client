@@ -14,7 +14,6 @@ export async function loginForm(credentials,url){
 
     try {
         if(url==='/login'){
-        console.log("user");
         const data = await axiosInstance.post('/login',credentials)
         return data 
 
@@ -93,7 +92,19 @@ export async function setGoogleProfile(profile,url){
     }
 }
 
+export async function fetchChats(senderRole){
+    const data = await axiosInstance.get(`${senderRole==='employeeId' ? '/chat' : '/employer/chat'}`)
+    return data
+}
 
+export async function storeMessage(senderRole,newMessage,chatId){
+    const requestData = {newMessage,chatId}
+    const data = await axiosInstance.post(`${senderRole==='employeeId' ? '/storeMessage' : '/employer/storeMessage'}`,requestData)
+    return data
+}
 
-
+export async function openChat(senderRole,chatId){
+    const data = await axiosInstance.get(`${senderRole==='employeeId' ? `/openChat?chatId=${chatId}` : `/employer/openChat?chatId=${chatId}`}`)
+    return data
+}
   

@@ -3,7 +3,7 @@ import Header from '../../components/user/userHeader/Header'
 
 function Profile() {
   return (
-    <div className='bg-slate-200 h-full flex-row' >
+    <div className='bg-slate-200 ' >
       <Header/>
       <ProfilePage/>
     </div>

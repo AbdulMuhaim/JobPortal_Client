@@ -4,7 +4,7 @@ import { signUpSchema } from '../../yup/Schema'
 import { registerForm } from '../../api/CommonApi'
 import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import {CgSpinner} from 'react-icons/cg'
+import { newOTP } from '../../api/UserApi'
 
 const initialValues = {
     role:"",
@@ -20,9 +20,9 @@ const initialValues = {
 function Signup() {
 
     const navigate = useNavigate()
-    const [showOtp,setShowOTP] = useState(false)
-    const [loading,setLoading] = useState(false)
+    const [showOTPModal,setShowOTPModal] = useState(false)
     const [otp,setOtp] = useState('')
+    const [resendOTP,setResendOTP] = useState(false)
 
   
 
@@ -31,21 +31,43 @@ function Signup() {
         validationSchema:signUpSchema,
          onSubmit: async (values) => {
           const response = await registerForm(values)
-                      
-          // if(response.data.message === 'ready for otp'){
-          //   console.log(response?.data?.message);
-          // }else{
-          //   toast.error(response?.data?.message)
-          // }
+          if(response.data.message === 'ready for otp'){
+            setShowOTPModal(true)
+          }else{
+            toast.error(response?.data?.message)
+          }
         },
        
       })
-    
 
+      const onOTPVerify = async()=> {
+        values.otp=otp
+        const response = await registerForm(values)
+        if(response.data.message === 'registered successfully'){
+          if(values.role === 'Employee'){
+            navigate('/login')
+          }else if(values.role === 'Employer'){
+            navigate('/employer/login')
+          }
+          toast.success(response?.data?.message)
+        }else if(response.data.message === 'otp expired'){
+          toast.error(response?.data?.message)
+          setOtp('')
+          setResendOTP(true)
+        }else{
+          toast.error(response?.data?.message)
+        }
+      }
+
+   const resendOTPFunction = ()=> {
+    newOTP(values.email)
+    setResendOTP(false)
+  }
+    
   return (
     <>
     <Toaster toastOptions={{duration:5000}}/>
-{showOtp?  
+{showOTPModal?  
 <div
  className="min-h-screen bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... py-6 flex flex-col justify-center sm:py-12"
  style={{ backgroundSize: "cover" }}
@@ -78,14 +100,22 @@ function Signup() {
             </label>
           </div>
           <br />
-          <div className="relative">
+          <div className="relative flex gap-5">
+
+          {resendOTP?<button
+              onClick={resendOTPFunction}
+              type="submit"
+              className="bg-blue-500 text-white rounded-md px-2 py-1 flex justify-center gap-1 items-center">
+               <span>resend OTP</span> 
+            </button>:null}
+
             <button
               onClick={onOTPVerify}
               type="submit"
               className="bg-blue-500 text-white rounded-md px-2 py-1 flex justify-center gap-1 items-center">
-                {loading && <CgSpinner size={20} className=' animate-spin'/>}
-               <span>Verify OTP</span> 
+               <span>verify OTP</span> 
             </button>
+
           </div>
         </div>
       </div>

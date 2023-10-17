@@ -85,3 +85,35 @@ export async function jobStatus(id){
     }
 }
 
+export async function fetchCardDatas(){
+    try {
+        const data = await axiosInstance.get('/admin/fetchCardDatas')
+        return data
+        } catch (error) {
+           console.log(error);
+        }
+}
+
+
+
+export async function fetchAmounts() {
+    try {
+      const response = await axiosInstance.get('/admin/fetchAmounts');
+      const data = response.data;
+      return data
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+
+  export async function fetchPlanCounts(){
+    try {
+        const response = await axiosInstance.get('/admin/fetchPlanCounts')
+        const data = response.data;
+        return data
+    } catch (error) {
+        console.log(error);
+    }
+  }
+  

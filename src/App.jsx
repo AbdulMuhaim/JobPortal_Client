@@ -11,8 +11,6 @@ import AdminRoutes from './routes/AdminRoutes';
 
 function App() {
 
-//   const userAuth = Boolean(useSelector((state)=>state.User.token))
-//   const adminAuth = Boolean(useSelector((state)=>state.Admin.token))
 
   return (
     <>

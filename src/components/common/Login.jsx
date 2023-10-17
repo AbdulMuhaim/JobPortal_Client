@@ -3,16 +3,17 @@ import { Link,useNavigate } from "react-router-dom";
 import {useFormik} from 'formik'
 import { loginSchema } from "../../yup/Schema";
 import { loginForm } from "../../api/CommonApi";
-import { userLogin } from "../../redux/slices/userSlice";
 import {useDispatch} from "react-redux"
 import { verifyMail } from "../../api/CommonApi";
 import  {toast}  from "react-hot-toast";
 import GoogleLogin from './GoogleLogin'
+import { userLogin } from "../../redux/slices/userSlice";
 import {adminLogin} from '../../redux/slices/adminSlice'
+import { employerLogin } from "../../redux/slices/employerSlice";
+
 
 
 function Login({url}) {
-
   const [forgotPass,setForgotPass] = useState(false)
   const [email,setEmail] = useState('')
 
@@ -25,7 +26,7 @@ async function sendOTP(){
   try {
     if(email.trim().length===0){
          toast.error('Enter email')
-    }else{ 
+    }else{
          const response = await verifyMail(email,`/${url}`)
          toast.success(response.data.messasge)
       } 
@@ -40,7 +41,9 @@ async function sendOTP(){
         initialValues:{email:"",password:"",role:""},
         validationSchema:loginSchema,  
         onSubmit: async (values)=>{
+          console.log(url);
           const response = await loginForm(values,`/${url}`)
+
       if(response.status === 200){
         
             const name = response?.data?.name
@@ -60,7 +63,7 @@ async function sendOTP(){
 
             }else if(role==='Employer'){
               console.log(response.data.message);
-              // dispatch(Login({name,id,role,token}))
+              dispatch(employerLogin({name,id,role,token}))
               toast.success(response.data.message)
               navigate('/employer/home')
             }else{

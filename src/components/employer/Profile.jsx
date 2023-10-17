@@ -1,8 +1,12 @@
+import { useSelector } from "react-redux"
 
-import React from 'react'
 
 
-function ProfilePage() {
+function Profile() {
+
+
+  const employerAuth = useSelector((state)=>state.Employer.name)
+
   return (
     <>
 
@@ -44,7 +48,7 @@ function ProfilePage() {
   </div>
 
   <div className="mt-20 text-center border-b pb-12">
-    <h1 className="text-4xl font-medium text-gray-700">Abdul Muhaim<span className="font-light text-gray-500"></span></h1>
+    <h1 className="text-4xl font-medium text-gray-700">{employerAuth}<span className="font-light text-gray-500"></span></h1>
     <p className="font-light text-gray-600 mt-3">India,Kerala</p>
 
     <p className="mt-8 text-gray-500">Solution Manager - Creative Tim Officer</p>
@@ -68,4 +72,4 @@ function ProfilePage() {
   )
 }
 
-export default ProfilePage
+export default Profile
