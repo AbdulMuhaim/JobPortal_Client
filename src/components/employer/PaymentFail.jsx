@@ -1,8 +1,6 @@
 import { BiErrorAlt } from 'react-icons/bi'
-import { useNavigate } from 'react-router'
 function PaymentFail() {
 
-  const navigate = useNavigate()
 
   return (
     <div className="bg-gray-100 h-full">
@@ -15,7 +13,7 @@ function PaymentFail() {
             Payment Failed
           </h3>
           <p className="text-gray-600 my-2">
-            We're sorry, but there was an issue with your payment.
+            We are sorry, but there was an issue with your payment.
           </p>
           <p>Please try again or contact customer support for assistance.</p>
           <div className="py-10 text-center">

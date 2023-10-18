@@ -1,7 +1,5 @@
-import {useNavigate } from 'react-router-dom';
 
 function PaymentSuccess() {
-  const navigate = useNavigate()
   return (
     <div className="bg-gray-100 h-full">
       <div className="bg-white p-6  md:mx-auto">

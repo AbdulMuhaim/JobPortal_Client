@@ -51,7 +51,7 @@ export default function EmpPlan() {
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Our payment plans offer a cost-effective and flexible solution
-              designed to meet your unique recruitment needs. Whether you're a
+              designed to meet your unique recruitment needs. Whether you are a
               small startup looking to expand your team or a well-established
               company aiming to optimize your hiring process, our plans are
               tailored to empower your success.
@@ -165,7 +165,6 @@ export default function EmpPlan() {
                     <span className="text-5xl font-bold tracking-tight text-gray-900">
                       3999
                     </span>
-                    {/* <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">USD</span> */}
                   </p>
 
                   {currentPlan === "3999" ? (
@@ -231,7 +230,6 @@ export default function EmpPlan() {
                     <span className="text-5xl font-bold tracking-tight text-gray-900">
                       9999
                     </span>
-                    {/* <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">USD</span> */}
                   </p>
 
                   {currentPlan === "9999" ? (

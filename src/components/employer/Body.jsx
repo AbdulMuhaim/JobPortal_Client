@@ -132,9 +132,9 @@ export default function Example() {
           </div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            "Welcome to MYJOB  Where Careers Take Flight!"            </h1>
+            Welcome to MYJOB  Where Careers Take Flight!            </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-            Our platform is designed to simplify the recruitment process, making it easier for you to find the right talent for your organization. Whether you're looking for seasoned professionals or enthusiastic newcomers, we're here to help you discover the perfect match.
+            Our platform is designed to simplify the recruitment process, making it easier for you to find the right talent for your organization. Whether you are looking for seasoned professionals or enthusiastic newcomers, we are here to help you discover the perfect match.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a

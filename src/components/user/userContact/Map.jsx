@@ -10,7 +10,7 @@ const locations = [
   { latitude: 13.0827, longitude: 80.2707, name: 'Chennai' },
 ];
 
-const MapComponent = ({ locations }) => {
+const MapComponent = () => {
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1IjoibXVoYWltMjUiLCJhIjoiY2xua2dyMm5oMGwxYjJycnp1anFlaGQ2ZCJ9.YmYBTuY9ozBqujUmiUa-Kw';
 

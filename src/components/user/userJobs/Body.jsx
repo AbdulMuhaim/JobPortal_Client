@@ -183,7 +183,7 @@ function Body() {
                 </h2>
                 <p className="mt-4 text-lg leading-8 text-gray-300">
                   Start exploring and take the next step towards your dream
-                  career today!".
+                  career today!.
                 </p>
               </div>
               <dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
@@ -198,12 +198,12 @@ function Body() {
                     Weekly articles
                   </dt>
                   <dd className="mt-2 leading-7 text-gray-400">
-                    "A good job pays enough to cover the bills and basic needs.
+                    A good job pays enough to cover the bills and basic needs.
                     A good job makes it possible to achieve a balance between
                     work life and home life. A good job motivates an employee to
                     want to do it well. A positive company culture is indicative
                     of a good job environment, which is a strong indicator of a
-                    good job".{" "}
+                    good job.
                   </dd>
                 </div>
                 <div className="flex flex-col items-start">
@@ -409,7 +409,7 @@ function Body() {
                 No results found.
               </p>
               <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
-                Sorry, we can't find any data. You'll find lots to explore on
+                Sorry, we can nott find any data. You will find lots to explore on
                 the home page.
               </p>
               <a

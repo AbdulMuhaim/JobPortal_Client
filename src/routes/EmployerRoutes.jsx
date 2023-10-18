@@ -4,7 +4,6 @@ import HomeEmp from '../pages/employer/HomeEmp'
 import Jobs from '../pages/employer/Jobs'
 import Plan from '../pages/employer/Plan'
 import AddJobs from '../pages/employer/AddJobs'
-import Test from '../components/employer/Test'
 import { useSelector } from 'react-redux'
 import Applications from '../pages/employer/Applications'
 import EmpIoyeeDetails from '../pages/employer/EmpIoyeeDetails'
@@ -31,9 +30,6 @@ function EmployerRoutes() {
 <Route path='/paymentSuccess' element={  <PaymentSuccess />  }/>
 <Route path='/paymentFail' element={  <PaymentFail />  }/>
 <Route path='*' element={<NotFoundPage/>} />
-
-
-<Route path='/test' element={<Test/>}/>
 
 </Routes>   
   )

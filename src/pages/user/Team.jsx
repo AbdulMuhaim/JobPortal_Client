@@ -1,4 +1,3 @@
-import React from 'react'
 import Body from '../../components/user/userTeam/Body'
 import Header from '../../components/user/userHeader/Header'
 

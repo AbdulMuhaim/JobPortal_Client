@@ -8,7 +8,6 @@ import axios from "axios";
 import editIcon from "../../../images/Ellipse.png";
 import removeIcon from "../../../images/remove2.png";
 import deleteIcon from "../../../images/remove1.png";
-import toast from "react-hot-toast";
 
 function ProfilePage() {
   const [fetchedUserData, setFetchedUserData] = useState([]);
