@@ -4,7 +4,7 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import {Toaster} from 'react-hot-toast';
 
 import UserRoutes from './routes/UserRoutes';
-import EmployerRoutes from './routes/employerRoutes';
+import EmployerRoutes from './routes/EmployerRoutes';
 import AdminRoutes from './routes/AdminRoutes';
 
 
