@@ -1,5 +1,5 @@
 import Header from '../../components/employer/Header'
-import EmployeeInfo from '../../components/employer/employeeInfo'
+import EmployeeInfo from '../../components/employer/EmployeeInfo'
 
 function EmpIoyeeDetails() {
   return (

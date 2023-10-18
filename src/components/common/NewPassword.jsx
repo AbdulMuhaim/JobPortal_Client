@@ -1,4 +1,3 @@
-import React from 'react'
 import {useFormik} from 'formik'
 import { newPasswordSchema } from '../../yup/Schema';
 import { setNewPassword } from '../../api/CommonApi';

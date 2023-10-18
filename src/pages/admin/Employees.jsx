@@ -1,6 +1,6 @@
 import EmployeesTable from '../../components/admin/employees/EmployeesTable'
-import Sidebar from '../../components/admin/adminHome.jsx/Sidebar'
-import Header from '../../components/admin/adminHome.jsx/Header'
+import Sidebar from '../../components/admin/adminHome/Sidebar'
+import Header from '../../components/admin/adminHome/Header'
 
 function Employees() {
   return (

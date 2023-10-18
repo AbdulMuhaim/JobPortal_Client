@@ -1,4 +1,3 @@
-import React from 'react'
 import ProfilePage from '../../components/admin/adminProfile/ProfilePage'
 
 function Profile() {

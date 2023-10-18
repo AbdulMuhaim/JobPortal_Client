@@ -1,7 +1,6 @@
-import React from 'react'
 import CategoryTable from '../../components/admin/categories/CategoryTable'
-import Header from '../../components/admin/adminHome.jsx/Header'
-import Sidebar from '../../components/admin/adminHome.jsx/Sidebar'
+import Header from '../../components/admin/adminHome/Header'
+import Sidebar from '../../components/admin/adminHome/Sidebar'
 
 function Categories () {
   return (

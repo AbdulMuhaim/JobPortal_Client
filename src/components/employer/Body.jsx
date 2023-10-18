@@ -4,7 +4,6 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { employerLogout } from '../../redux/slices/employerSlice'
-import image from '../../images/employHome.jpg'
 
 
 const navigation = [

@@ -1,4 +1,3 @@
-import React from 'react'
 import NewPassword from '../../components/common/NewPassword'
 
 function PasswordNew({url}) {

@@ -1,8 +1,8 @@
-import Sidebar from '../../components/admin/adminHome.jsx/Sidebar'
-import Header from '../../components/admin/adminHome.jsx/Header'
-import Cards from '../../components/admin/adminHome.jsx/Cards'
-import Chart from '../../components/admin/adminHome.jsx/Chart'
-import PieChart from '../../components/admin/adminHome.jsx/pieChart'
+import Sidebar from '../../components/admin/adminHome/Sidebar'
+import Header from '../../components/admin/adminHome/Header'
+import Cards from '../../components/admin/adminHome/Cards'
+import Chart from '../../components/admin/adminHome/Chart'
+import PieChart from '../../components/admin/adminHome/PieChart'
 
 
 function Dashboard() {
