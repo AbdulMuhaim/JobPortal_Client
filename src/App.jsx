@@ -3,7 +3,7 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 // import { useSelector } from 'react-redux';
 import {Toaster} from 'react-hot-toast';
 
-import UserRoutes from './routes/userRoutes';
+import UserRoutes from './routes/UserRoutes';
 import EmployerRoutes from './routes/employerRoutes';
 import AdminRoutes from './routes/AdminRoutes';
 
