@@ -4,12 +4,13 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { employerLogout } from '../../redux/slices/employerSlice'
+import logo from '../../images/logo.png'
+
 
 
 const navigation = [
   { name: 'Jobs', href: '/employer/jobs' },
   { name: 'Plan', href: '/employer/plan' },
-  { name: 'Profile', href: '/employer/profile' },
   { name: 'Applications', href: '/employer/applications'},
   { name: 'Messages', href:'/employer/chat'},
 ]
@@ -36,7 +37,7 @@ export default function Example() {
             <a className="-m-1.5 p-1.5 font-extrabold">
               <img
                 className="h-8 w-auto"
-                src="https://www.kindpng.com/picc/m/263-2637108_career-icon-png-clipart-png-download-icon-job.png"
+                src={logo}
                 alt=""
               />MYJOB
             </a>

@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { employerLogout } from '../../redux/slices/employerSlice'
@@ -12,7 +12,6 @@ const navigation = [
   { name: 'Plan', href: '/employer/plan', current: false },
   { name: 'Applications', href: '/employer/applications', current: false},
   { name: 'Messages', href: '/employer/chat', current: false },
-  { name: 'Profile', href: '/employer/profile', current: false}
 ]
 
 function classNames(...classes) {
@@ -82,14 +81,7 @@ const employerProfile = ()=>{
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+             
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -118,7 +110,7 @@ const employerProfile = ()=>{
                         {({ active }) => (
                           <a
                             onClick={employerProfile}
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                           >
                             Your Profile
                           </a>
@@ -128,7 +120,7 @@ const employerProfile = ()=>{
                         {({ active }) => (
                           <a
                             onClick={logout}
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                           >
                             Sign out
                           </a>

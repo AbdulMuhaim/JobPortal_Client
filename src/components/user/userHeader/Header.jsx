@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon,BellIcon,XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from "react-router"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { userLogout } from '../../../redux/slices/userSlice'
 import logo from '../../../images/logo.png'
 
@@ -37,6 +37,7 @@ export default function Example() {
     navigate('/profile')
   }
 
+  const userName = useSelector((state) => state.User.name);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -87,7 +88,7 @@ export default function Example() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-                <button
+                {userName && <button
                 onClick={()=>navigate('/notifications')}
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -95,11 +96,12 @@ export default function Example() {
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                </button>}
 
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+
+                {userName && <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
@@ -143,7 +145,9 @@ export default function Example() {
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>
-                </Menu>
+                </Menu>}
+
+
               </div>
             </div>
           </div>

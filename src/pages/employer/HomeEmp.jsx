@@ -6,6 +6,7 @@ function Home() {
   return (
     <div>
       <Body/>
+      <br /><br /><br />
       <Middle/>
       <Footer/>
      

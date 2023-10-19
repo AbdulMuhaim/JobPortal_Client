@@ -17,6 +17,10 @@ export default function HomePageHeader() {
   const [searchValue,setSearchValue] = useState('')
   const navigate = useNavigate()
 
+  const jobSearch = ()=> {
+    searchValue ? navigate('/jobs',{state:{searchValue}}) : null
+  }
+
   const handleNavigation = () => {
     navigate('/jobs');
   };
@@ -31,7 +35,7 @@ export default function HomePageHeader() {
         {userName?<div>
           <p className="text-white">Welcome</p>
           <p className="text-white">{userName}</p>
-        </div>:null}
+        </div>: <div className="flex place-items-end justify-center cursor-pointer"><p onClick={()=>navigate('/login')} className="text-white underline">Login</p></div> }
 
         <a className="text-white">
           <span>
@@ -124,7 +128,7 @@ export default function HomePageHeader() {
             />
             <button
               type="submit"
-              onClick={()=>navigate('/jobs',{state:{searchValue}})}
+              onClick={jobSearch}
               className="flex-none rounded-md bg-indigo-500 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
             >
               Search
