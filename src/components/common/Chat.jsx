@@ -10,6 +10,7 @@ function ChatComponent({ senderRole, reciverRole }) {
   const [allMessages, setAllMessages] = useState([]);
   const [selectedChat, setSelectedChat] = useState("");
   const [socket, setSocket] = useState(null);
+  const [isOpen,setIsOpen] = useState(false)
 
   const baseUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -41,6 +42,7 @@ function ChatComponent({ senderRole, reciverRole }) {
 
   // Open a chat and load its messages
   const chatOpen = (chat) => {
+    setIsOpen(true)
     setSelectedChat(chat);
     openChat(senderRole, chat._id).then((res) => {
       setAllMessages(res.data.result);
@@ -101,7 +103,8 @@ function ChatComponent({ senderRole, reciverRole }) {
             </div>
           </div>
 
-          <ul className=" overflow-auto h-[32rem]">
+          {/* <ul className="overflow-auto h-[32rem]"> */}
+          <ul className={`${isOpen ?'hidden lg:overflow-auto lg:h-[32rem] lg:block' : 'overflow-auto lg:h-[32rem]'}`}>
             <h2 className="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
             <li>
               {inboxChats.map((chat) => {
@@ -135,9 +138,13 @@ function ChatComponent({ senderRole, reciverRole }) {
             </li>
           </ul>
         </div>
-        <div className=" lg:col-span-2 lg:block">
+
+        <div className={`${!isOpen ? 'hidden lg:col-span-2 lg:block' : 'lg:col-span-2 lg:block'}`}>
           <div className="w-full">
             <div className="relative flex items-center p-3 border-b border-gray-300">
+            {isOpen && <svg onClick={()=>setIsOpen(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+</svg>}
               <img
                 className="object-cover w-10 h-10 rounded-full"
                 src={
@@ -187,6 +194,7 @@ function ChatComponent({ senderRole, reciverRole }) {
                 onChange={(e) => setNewMessage(e.target.value)}
                 className="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
                 name="message"
+                defaultValue={''}
                 required
               />
               <button type="submit" onClick={sendMessage}>

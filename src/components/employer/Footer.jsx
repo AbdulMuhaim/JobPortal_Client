@@ -1,3 +1,4 @@
+import logo from '../../images/logo.png'
 
 function Footer() {
   return (
@@ -7,7 +8,7 @@ function Footer() {
           <div className="mb-6 md:mb-0">
             <a  className="flex items-center">
               <img
-                src="https://www.kindpng.com/picc/m/263-2637108_career-icon-png-clipart-png-download-icon-job.png"
+                src={logo}
                 className="h-8 mr-3"
                 alt="FlowBite Logo"
               />

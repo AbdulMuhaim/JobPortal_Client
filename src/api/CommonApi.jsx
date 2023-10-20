@@ -25,7 +25,7 @@ export async function loginForm(credentials,url){
         const data = await axiosInstance.post('/admin/login',credentials)
         return data 
        }
-    } catch (error) { 
+    } catch (error) {
         console.log("login error"); 
     }
 }

@@ -27,10 +27,9 @@ function UserRoutes() {
        <Route path='/contact' element={<Contact/>}/>
        <Route path='/profile' element={userAuth? <Profile/> : <Navigate to='/login'/>}/>
        <Route path='/resetPassword/:userId' element={ <PasswordNew url='login'/>}/>
-       <Route path='/jobDetails' element={<JobInDetail/>}/>
+       <Route path='/jobDetails' element={userAuth? <JobInDetail/> : <Navigate to='/login'/> }/>
        <Route path='/chat' element={userAuth? <Messages/> : <Navigate to='/login'/>}/>
        <Route path='/notifications' element={userAuth? <Notification/> : <Navigate to='/login'/>}/>
-
        <Route path='*' element={<NotFoundPage/>} />
 
 

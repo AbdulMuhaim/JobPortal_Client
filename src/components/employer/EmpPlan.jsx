@@ -19,7 +19,7 @@ export default function EmpPlan() {
 
   useEffect(() => {
     fetchEmployerPlan()
-      .then((res) => { 
+      .then((res) => {
         if(res === currentPlan){
            null
         }else{
@@ -29,6 +29,9 @@ export default function EmpPlan() {
       .catch((err) => {
         toast.error(err.message);
       });
+
+   
+
   }, []);
 
   const paymentPlan = (amount) => {
