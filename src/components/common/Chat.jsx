@@ -135,7 +135,7 @@ function ChatComponent({ senderRole, reciverRole }) {
             </li>
           </ul>
         </div>
-        <div className="hidden lg:col-span-2 lg:block">
+        <div className=" lg:col-span-2 lg:block">
           <div className="w-full">
             <div className="relative flex items-center p-3 border-b border-gray-300">
               <img

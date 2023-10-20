@@ -15,13 +15,15 @@ axiosInstance.interceptors.request.use(
 
         const role = config.url.split("/")[1]
 
+        console.log(role,userState.role)
+
         if (role==='employer') {
             config.headers['Authorization'] = `Bearer ${employerState.token}`;
         }
         else if (role==='admin') {
             config.headers['Authorization'] = `Bearer ${adminState.token}`;
         }
-        else{
+        else{   
             config.headers['Authorization'] = `Bearer ${userState.token}`;
         }
 
