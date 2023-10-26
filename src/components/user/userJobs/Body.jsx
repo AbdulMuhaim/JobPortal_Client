@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import JobModal from "./JobModal";
 import axios from "axios";
+import Skelton from '../skelton/Skelton'
 
 function Body() {
   const userName = useSelector((state) => state.User.name);
@@ -19,7 +20,9 @@ function Body() {
   const [dataCount, setDataCount] = useState(0);
   const [filterData, setFilterData] = useState({});
   const [timer, setTimer] = useState(null);
+  const [jobUpdated,setJobUpdated] = useState(false)
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(true)
   const userId = useSelector((state) => state.User.id);
 
   useEffect(() => {
@@ -59,6 +62,7 @@ function Body() {
   useEffect(() => {
     fetchJobs(dataCount, filterData, search)
       .then((res) => {
+        setLoading(false)
         setAllJobs(res.data.jobs);
       })
       .catch((jobsErr) => {
@@ -72,7 +76,7 @@ function Body() {
       .catch((categoriesErr) => {
         console.error("Error fetching categories:", categoriesErr);
       });
-  }, [filterData, dataCount, search]);
+  }, [filterData, dataCount, search, jobUpdated]);
 
   const applyJob = (id) => {
     setJobId(id);
@@ -98,6 +102,7 @@ function Body() {
     jobApplication(jobId, cvUrl, letter).then((res) => {
       const updatedJobs = allJobs.map((job) => {
         if (job._id === jobId && res.status === '200') {
+
           return {
             ...job,
             appliedEmployees: [...job.appliedEmployees, userId],
@@ -105,7 +110,8 @@ function Body() {
         }
         return job;
       });
-      setAllJobs(updatedJobs);
+      setAllJobs(updatedJobs)
+      setJobUpdated(!jobUpdated)
       setJobConfoModal(false);
     });
   };
@@ -358,10 +364,11 @@ function Body() {
           </div>
         </div>
 
-        { allJobs.length > 0 ? <div className="grid grid-cols-12 sm:px-5 gap-x-8 gap-y-16 ">
+        { loading ? ( <Skelton/>) : (
+         allJobs.length > 0 ? (  <div className="grid grid-cols-12 sm:px-5 gap-x-8 gap-y-16 ">
           {allJobs.map((data, index) => (
             <div
-              key={index + 1 * 2}
+              key={index}
               className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 border shadow-xl px-7 py-2 rounded-lg group transition-transform transform-gpu scale-100 hover:scale-105 hover:shadow-md"
             >
               <img className="w-20 h-20 rounded-full" src={data.image} />
@@ -397,9 +404,9 @@ function Body() {
               </div>
             </div>
           ))}
-        </div>
+        </div> ) : (
 
-        : <section className="bg-white ">
+        <section className="bg-white ">
           <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div className="mx-auto max-w-screen-sm text-center">
               <h1 className="mb-4 text-7xl tracking-tight font-extrabold lg:text-5xl text-primary-600 dark:text-primary-500">
@@ -419,7 +426,9 @@ function Body() {
               </a>
             </div>
           </div>
-        </section> }
+        </section> ) ) }
+
+
 
       </div>
       {jobConfoModal ? (

@@ -46,6 +46,7 @@ export async function jobApplication(id,cv,letter){
     try {
         const requestData = {id:id,cv:cv,letter:letter}
         const data = await axiosInstance.post('/jobApplication',requestData)
+        
         return data
     } catch (error){
         console.log(error);
