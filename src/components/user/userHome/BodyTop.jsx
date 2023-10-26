@@ -37,7 +37,7 @@ export default function HomePageHeader() {
           <p className="text-white">{userName}</p>
         </div>: <div className="flex place-items-end justify-center cursor-pointer"><p onClick={()=>navigate('/login')} className="text-white underline">Login</p></div> }
 
-        <a className="text-white">
+        <a className="text-white ">
           <span>
             <img
               className="w-10 h-10"
@@ -90,17 +90,19 @@ export default function HomePageHeader() {
           </p>
         </div>
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
+          
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10 items-center justify-center">
-              <a className="font-medium"
+              <a className="font-medium animate-bounce"
                 onClick={handleNavigation}
                 style={{ cursor: "pointer" }}
               >
               Explore MYJOB <span aria-hidden="true">&rarr;</span>
               </a>
           </div>
-          <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
+
+          <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4 ">
             {stats.map((stat) => (
-              <div key={stat.name} className="flex flex-col-reverse">
+              <div key={stat.name} className="flex flex-col-reverse animate-pulse">
                 <dt className="text-base leading-7 text-gray-300">
                   {stat.name}
                 </dt>
