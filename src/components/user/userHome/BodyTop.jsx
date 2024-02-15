@@ -96,7 +96,7 @@ export default function HomePageHeader() {
                 onClick={handleNavigation}
                 style={{ cursor: "pointer" }}
               >
-              Explore MYJOB <span aria-hidden="true">&rarr;</span>
+             Click here to Explore MYJOB <span aria-hidden="true">&rarr;</span>
               </a>
           </div>
 
