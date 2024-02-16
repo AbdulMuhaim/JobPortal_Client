@@ -41,7 +41,6 @@ async function sendOTP(){
         initialValues:{email:"",password:"",role:""},
         validationSchema:loginSchema,  
         onSubmit: async (values)=>{
-          console.log(url);
           const response = await loginForm(values,`/${url}`)
 
       if(response.status === 200){
